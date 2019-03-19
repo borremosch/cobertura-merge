@@ -68,7 +68,21 @@ const output: CoberturaJson = {
       version: '0.1',
       timestamp: Date.now().toString(),
       sources: flatten(inputs.map(input => input.data.coverage[0].sources || [])),
-      packages: flatten(inputs.map(input => input.data.coverage[0].packages))
+      packages: [
+        {
+          package: flatten(
+            inputs.map(input => {
+              return input.data.coverage[0].packages[0].package.map(jsonPackage => ({
+                name: jsonPackage.name === '.' ? input.packageName : `${input.packageName}.${jsonPackage.name}`,
+                'line-rate': jsonPackage['line-rate'],
+                'branch-rate': jsonPackage['branch-rate'],
+                complexity: jsonPackage.complexity,
+                classes: jsonPackage.classes
+              }));
+            })
+          )
+        }
+      ]
     }
   ]
 };

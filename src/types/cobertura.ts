@@ -25,7 +25,7 @@ export interface Package {
     name: string;
     'line-rate': string;
     'branch-rate': string;
-    complexity: string;
+    complexity?: string;
     classes: Class[];
   }>;
 }
@@ -36,7 +36,7 @@ interface Class {
     filename: string;
     'line-rate': string;
     'branch-rate': string;
-    complexity: string;
+    complexity?: string;
     methods: Method[];
     lines: Line[];
   }>;
@@ -48,7 +48,7 @@ interface Method {
     signature: string;
     'line-rate': string;
     'branch-rate': string;
-    complexity: string;
+    complexity?: string;
   }>;
 }
 
