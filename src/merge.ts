@@ -1,5 +1,5 @@
 import { InputData } from './input';
-import { CoberturaJson } from './types/cobertura';
+import { CoberturaJson, Package, Class } from './types/cobertura';
 import { flatten } from './util';
 
 const VERSION = '0.1';
@@ -9,15 +9,18 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
   const totalBranchesValid = sumCoverageProperty(inputs, 'branches-valid');
   const totalLinesCovered = sumCoverageProperty(inputs, 'lines-covered');
   const totalLinesValid = sumCoverageProperty(inputs, 'lines-valid');
+  const branchRate = (totalBranchesCovered / totalBranchesValid || 0).toString();
+  const lineRate = (totalLinesCovered / totalLinesValid || 0).toString();
+  const complexity = Math.max(...inputs.map(input => parseInt(input.data.coverage[0].complexity, 10))).toString();
 
   return {
     coverage: [
       {
-        'branch-rate': (totalBranchesCovered / totalBranchesValid || 0).toString(),
+        'branch-rate': branchRate,
         'branches-covered': totalBranchesCovered.toString(),
         'branches-valid': totalBranchesValid.toString(),
-        complexity: Math.max(...inputs.map(input => parseInt(input.data.coverage[0].complexity, 10))).toString(),
-        'line-rate': (totalLinesCovered / totalLinesValid || 0).toString(),
+        complexity,
+        'line-rate': lineRate,
         'lines-covered': totalLinesCovered.toString(),
         'lines-valid': totalLinesValid.toString(),
         version: VERSION,
@@ -27,13 +30,34 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
           {
             package: flatten(
               inputs.map(input => {
-                return input.data.coverage[0].packages[0].package.map(jsonPackage => ({
-                  name: jsonPackage.name === '.' ? input.packageName : `${input.packageName}.${jsonPackage.name}`,
-                  'line-rate': jsonPackage['line-rate'],
-                  'branch-rate': jsonPackage['branch-rate'],
-                  complexity: jsonPackage.complexity,
-                  classes: jsonPackage.classes
-                }));
+                return flatten(
+                  input.data.coverage[0].packages.map(packages => {
+                    if ((packages as Package).package) {
+                      return (packages as Package).package.map(jsonPackage => ({
+                        name: jsonPackage.name === '.' ? input.packageName : `${input.packageName}.${jsonPackage.name}`,
+                        'line-rate': jsonPackage['line-rate'],
+                        'branch-rate': jsonPackage['branch-rate'],
+                        complexity: jsonPackage.complexity,
+                        classes: jsonPackage.classes
+                      }));
+                    } else {
+                      return [
+                        {
+                          name: input.packageName,
+                          'line-rate': lineRate,
+                          'branch-rate': branchRate,
+                          complexity,
+                          classes: (packages as Class).class.map(
+                            jsonClass =>
+                              ({
+                                class: [jsonClass]
+                              } as Class)
+                          )
+                        }
+                      ];
+                    }
+                  })
+                );
               })
             )
           }

@@ -13,7 +13,7 @@ export interface Coverage {
   version: string;
   timestamp: string;
   sources?: Source[];
-  packages: Package[];
+  packages: Array<Package | Class>;
 }
 
 interface Source {
@@ -32,7 +32,7 @@ export interface Package {
   }>;
 }
 
-interface Class {
+export interface Class {
   class: Array<{
     name: string;
     filename: string;

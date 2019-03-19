@@ -43,7 +43,20 @@ export const INPUT_FILE1: InputData = {
                 'branch-rate': '1',
                 'line-rate': '1',
                 name: 'package1',
-                classes: []
+                classes: [
+                  {
+                    class: [
+                      {
+                        name: 'main',
+                        filename: 'main.ts',
+                        'line-rate': '0,5',
+                        'branch-rate': '0.5',
+                        methods: [],
+                        lines: []
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -75,7 +88,54 @@ export const INPUT_FILE2: InputData = {
                 'branch-rate': '1',
                 'line-rate': '1',
                 name: '.',
-                classes: []
+                classes: [
+                  {
+                    class: [
+                      {
+                        name: 'index',
+                        filename: 'index.ts',
+                        'line-rate': '1',
+                        'branch-rate': '1',
+                        methods: [],
+                        lines: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+
+export const INPUT_FILE_WITH_ROOT_CLASSES: InputData = {
+  packageName: 'input3',
+  fileName: 'inputfile3',
+  data: {
+    coverage: [
+      {
+        'line-rate': '0.7',
+        'branch-rate': '0.7',
+        'lines-covered': '21',
+        'lines-valid': '30',
+        'branches-covered': '7',
+        'branches-valid': '10',
+        complexity: '0',
+        version: '1',
+        timestamp: '0',
+        packages: [
+          {
+            class: [
+              {
+                name: 'util',
+                filename: 'util.ts',
+                'line-rate': '0.8',
+                'branch-rate': '0.8',
+                methods: [],
+                lines: []
               }
             ]
           }
