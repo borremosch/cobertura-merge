@@ -3,6 +3,7 @@ import { isArray } from 'util';
 import * as fs from 'fs';
 import { toJson, toXml } from 'xml2json';
 import { addSelfClosingTags, flatten } from './util';
+import { CoberturaJson } from './types/cobertura';
 
 const XML_HEADER = '<?xml version="1.0" ?>\n';
 
@@ -37,7 +38,7 @@ const inputs = inputArgs.map(inputArg => {
   const parts = inputArg.split('=');
   const packageName = parts[0];
   const fileName = parts[1];
-  let data: any = {};
+  let data = {};
   try {
     data = JSON.parse(
       toJson(fs.readFileSync(fileName, 'utf-8'), {
@@ -50,21 +51,23 @@ const inputs = inputArgs.map(inputArg => {
     process.exit(1);
   }
 
-  return { packageName, fileName, data };
+  return { packageName, fileName, data: data as CoberturaJson };
 });
 
 // Generate output
-const output = {
+const output: CoberturaJson = {
   coverage: [
     {
       'branch-rate': inputs[0].data.coverage[0]['branch-rate'],
-      'branch-covered': inputs[0].data.coverage[0]['branch-covered'],
+      'branches-covered': inputs[0].data.coverage[0]['branches-covered'],
       'branches-valid': inputs[0].data.coverage[0]['branches-valid'],
       complexity: inputs[0].data.coverage[0].complexity,
       'line-rate': inputs[0].data.coverage[0]['line-rate'],
       'lines-covered': inputs[0].data.coverage[0]['lines-covered'],
       'lines-valid': inputs[0].data.coverage[0]['lines-valid'],
-      sources: flatten(inputs.map(input => input.data.coverage[0].sources)),
+      version: inputs[0].data.coverage[0].version,
+      timestamp: inputs[0].data.coverage[0].timestamp,
+      sources: flatten(inputs.map(input => input.data.coverage[0].sources || [])),
       packages: flatten(inputs.map(input => input.data.coverage[0].packages))
     }
   ]
