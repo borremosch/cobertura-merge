@@ -65,8 +65,8 @@ const output: CoberturaJson = {
       'line-rate': inputs[0].data.coverage[0]['line-rate'],
       'lines-covered': inputs[0].data.coverage[0]['lines-covered'],
       'lines-valid': inputs[0].data.coverage[0]['lines-valid'],
-      version: inputs[0].data.coverage[0].version,
-      timestamp: inputs[0].data.coverage[0].timestamp,
+      version: '0.1',
+      timestamp: Date.now().toString(),
       sources: flatten(inputs.map(input => input.data.coverage[0].sources || [])),
       packages: flatten(inputs.map(input => input.data.coverage[0].packages))
     }
