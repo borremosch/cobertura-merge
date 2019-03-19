@@ -31,14 +31,32 @@ describe('mergeInputs', () => {
   it('should merge a single file with a single package', () => {
     const output = mergeInputs([INPUT_FILE1, INPUT_FILE2]);
 
+    const totalLinesCovered =
+      parseInt(INPUT_FILE1.data.coverage[0]['lines-covered'], 10) +
+      parseInt(INPUT_FILE2.data.coverage[0]['lines-covered'], 10);
+    const totalLinesValid =
+      parseInt(INPUT_FILE1.data.coverage[0]['lines-valid'], 10) +
+      parseInt(INPUT_FILE2.data.coverage[0]['lines-valid'], 10);
+    const totalBranchesCovered =
+      parseInt(INPUT_FILE1.data.coverage[0]['branches-covered'], 10) +
+      parseInt(INPUT_FILE2.data.coverage[0]['branches-covered'], 10);
+    const totalBranchesValid =
+      parseInt(INPUT_FILE1.data.coverage[0]['branches-valid'], 10) +
+      parseInt(INPUT_FILE2.data.coverage[0]['branches-valid'], 10);
+
+    const complexity = Math.max(
+      parseInt(INPUT_FILE1.data.coverage[0].complexity, 10),
+      parseInt(INPUT_FILE2.data.coverage[0].complexity, 10)
+    );
+
     expect(output.coverage.length).to.equal(1);
-    expect(output.coverage[0]['line-rate']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['line-rate']);
-    expect(output.coverage[0]['branch-rate']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['branch-rate']);
-    expect(output.coverage[0]['lines-covered']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['lines-covered']);
-    expect(output.coverage[0]['lines-valid']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['lines-valid']);
-    expect(output.coverage[0]['branches-covered']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['branches-covered']);
-    expect(output.coverage[0]['branches-valid']).to.equal(EMPTY_INPUT_FILE.data.coverage[0]['branches-valid']);
-    expect(output.coverage[0].complexity).to.equal(EMPTY_INPUT_FILE.data.coverage[0].complexity);
+    expect(output.coverage[0]['line-rate']).to.equal((totalLinesCovered / totalLinesValid).toString());
+    expect(output.coverage[0]['branch-rate']).to.equal((totalBranchesCovered / totalBranchesValid).toString());
+    expect(output.coverage[0]['lines-covered']).to.equal(totalLinesCovered.toString());
+    expect(output.coverage[0]['lines-valid']).to.equal(totalLinesValid.toString());
+    expect(output.coverage[0]['branches-covered']).to.equal(totalBranchesCovered.toString());
+    expect(output.coverage[0]['branches-valid']).to.equal(totalBranchesValid.toString());
+    expect(output.coverage[0].complexity).to.equal(complexity.toString());
     expect(parseInt(output.coverage[0].timestamp, 10)).to.be.almost(Date.now(), 100);
     expect(output.coverage[0].sources).to.be.array();
     expect(output.coverage[0].sources!.length).to.equal(0);

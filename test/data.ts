@@ -6,8 +6,8 @@ export const EMPTY_INPUT_FILE: InputData = {
   data: {
     coverage: [
       {
-        'line-rate': '1',
-        'branch-rate': '1',
+        'line-rate': '0',
+        'branch-rate': '0',
         'lines-covered': '0',
         'lines-valid': '0',
         'branches-covered': '0',
@@ -27,12 +27,12 @@ export const INPUT_FILE1: InputData = {
   data: {
     coverage: [
       {
-        'line-rate': '1',
-        'branch-rate': '1',
-        'lines-covered': '0',
-        'lines-valid': '0',
-        'branches-covered': '0',
-        'branches-valid': '0',
+        'line-rate': '0.5',
+        'branch-rate': '0.5',
+        'lines-covered': '15',
+        'lines-valid': '30',
+        'branches-covered': '12',
+        'branches-valid': '24',
         complexity: '0',
         version: '1',
         timestamp: '0',
@@ -59,12 +59,12 @@ export const INPUT_FILE2: InputData = {
   data: {
     coverage: [
       {
-        'line-rate': '1',
-        'branch-rate': '1',
-        'lines-covered': '0',
-        'lines-valid': '0',
-        'branches-covered': '0',
-        'branches-valid': '0',
+        'line-rate': '0.8',
+        'branch-rate': '0.8',
+        'lines-covered': '16',
+        'lines-valid': '20',
+        'branches-covered': '32',
+        'branches-valid': '40',
         complexity: '0',
         version: '1',
         timestamp: '0',

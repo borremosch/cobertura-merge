@@ -1,17 +1,19 @@
 export interface CoberturaJson {
-  coverage: Array<{
-    'line-rate': string;
-    'branch-rate': string;
-    'lines-covered': string;
-    'lines-valid': string;
-    'branches-covered': string;
-    'branches-valid': string;
-    complexity: string;
-    version: string;
-    timestamp: string;
-    sources?: Source[];
-    packages: Package[];
-  }>;
+  coverage: Coverage[];
+}
+
+export interface Coverage {
+  'line-rate': string;
+  'branch-rate': string;
+  'lines-covered': string;
+  'lines-valid': string;
+  'branches-covered': string;
+  'branches-valid': string;
+  complexity: string;
+  version: string;
+  timestamp: string;
+  sources?: Source[];
+  packages: Package[];
 }
 
 interface Source {
