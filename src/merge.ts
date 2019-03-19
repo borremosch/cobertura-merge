@@ -25,7 +25,13 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
         'lines-valid': totalLinesValid.toString(),
         version: VERSION,
         timestamp: Date.now().toString(),
-        sources: flatten(inputs.map(input => input.data.coverage[0].sources || [])),
+        sources: [
+          {
+            source: flatten(
+              inputs.map(input => (input.data.coverage[0].sources ? input.data.coverage[0].sources![0].source : []))
+            )
+          }
+        ],
         packages: [
           {
             package: flatten(

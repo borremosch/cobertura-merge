@@ -15,6 +15,15 @@ export const EMPTY_INPUT_FILE: InputData = {
         complexity: '0',
         version: '1',
         timestamp: '0',
+        sources: [
+          {
+            source: [
+              {
+                $t: 'source'
+              }
+            ]
+          }
+        ],
         packages: [{ package: [] }]
       }
     ]
@@ -36,6 +45,18 @@ export const INPUT_FILE1: InputData = {
         complexity: '0',
         version: '1',
         timestamp: '0',
+        sources: [
+          {
+            source: [
+              {
+                $t: 'source1.1'
+              },
+              {
+                $t: 'source1.2'
+              }
+            ]
+          }
+        ],
         packages: [
           {
             package: [
@@ -81,6 +102,18 @@ export const INPUT_FILE2: InputData = {
         complexity: '0',
         version: '1',
         timestamp: '0',
+        sources: [
+          {
+            source: [
+              {
+                $t: 'source2.1'
+              },
+              {
+                $t: 'source2.2'
+              }
+            ]
+          }
+        ],
         packages: [
           {
             package: [
@@ -126,6 +159,15 @@ export const INPUT_FILE_WITH_ROOT_CLASSES: InputData = {
         complexity: '0',
         version: '1',
         timestamp: '0',
+        sources: [
+          {
+            source: [
+              {
+                $t: 'source_with_root_classes'
+              }
+            ]
+          }
+        ],
         packages: [
           {
             class: [
