@@ -20,7 +20,7 @@ function printHelp() {
   process.exit();
 }
 
-const KNOWN_ARGS = ['_', 'o', 'p'];
+const KNOWN_ARGS = ['_', 'o', 'p', 'print'];
 
 export function validateArgs(args: ParsedArgs) {
   // Check for unknown arguments

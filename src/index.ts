@@ -11,7 +11,7 @@ const inputs = getInputDataFromArgs(args);
 // Generate output
 const output = mergeInputs(inputs);
 
-if (args.p) {
+if (args.p || args.print) {
   // Print summary to output
   const lineCoverage = parseFloat(output.coverage[0]['line-rate']) * 100;
   const branchCoverage = parseFloat(output.coverage[0]['branch-rate']) * 100;
