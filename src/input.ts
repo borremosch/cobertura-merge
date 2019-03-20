@@ -1,16 +1,37 @@
 import { ParsedArgs } from 'minimist';
-import { isArray } from 'util';
+import { isArray, isString } from 'util';
 import { toJson } from 'xml2json';
 import { CoberturaJson } from './types/cobertura';
 import * as fs from 'fs';
+import * as path from 'path';
 
 function printHelp() {
-  console.log('Usage: cobertura-merge -o output [package=input]...');
+  console.log(
+    `Version ${JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json')).toString('utf-8')).version}`
+  );
+  console.log('Syntax:    cobertura-merge [options]... [package=input...]');
+  console.log('');
+  console.log('Examples:  cobertura-merge -o ouptut.xml package1=output1.xml package2=output2.xml');
+  console.log('           cobertura-merge -p package1=output1.xml package2=output2.xml');
+  console.log('');
+  console.log('Options');
+  console.log('-o FILE         Specify output file');
+  console.log('-p, --print     print coverage report summary');
   process.exit();
 }
 
+const KNOWN_ARGS = ['_', 'o', 'p'];
+
 export function validateArgs(args: ParsedArgs) {
-  if (args._.length < 3 || !args.o || isArray(args.o)) {
+  // Check for unknown arguments
+  const unknownArg = Object.keys(args).find(arg => KNOWN_ARGS.indexOf(arg) === -1);
+  if (unknownArg) {
+    console.log(`Unknown argument ${unknownArg}\n`);
+    printHelp();
+    process.exit(1);
+  }
+
+  if (args._.length < 3 || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
     // Input error
     printHelp();
   }

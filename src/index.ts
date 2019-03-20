@@ -11,5 +11,17 @@ const inputs = getInputDataFromArgs(args);
 // Generate output
 const output = mergeInputs(inputs);
 
-// Write output
-writeOutput(args, output);
+if (args.p) {
+  // Print summary to output
+  const lineCoverage = parseFloat(output.coverage[0]['line-rate']) * 100;
+  const branchCoverage = parseFloat(output.coverage[0]['branch-rate']) * 100;
+
+  console.log(`Total line Coverage: ${lineCoverage.toFixed(2)}%`);
+  console.log(`Total branch Coverage: ${branchCoverage.toFixed(2)}%`);
+  console.log(`Total average Coverage: ${((lineCoverage + branchCoverage) / 2).toFixed(2)}%`);
+}
+
+if (args.o) {
+  // Write resulting xml to file
+  writeOutput(args.o, output);
+}
