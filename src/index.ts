@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import parseArgs from 'minimist';
 import { validateArgs, getInputDataFromArgs } from './input';
 import { mergeInputs } from './merge';
