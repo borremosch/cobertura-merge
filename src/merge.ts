@@ -1,8 +1,20 @@
 import { InputData } from './input';
 import { CoberturaJson, Package, Class } from './types/cobertura';
 import { flatten } from './util';
+import * as path from 'path';
 
 const VERSION = '0.1';
+
+function rewriteBasedir(originalBaseDir: string, classes: Class[]) {
+  return classes.map(jsonClass => ({
+    class: jsonClass.class.map(jsonInnerClass => {
+      return {
+        ...jsonInnerClass,
+        filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename))
+      };
+    })
+  }));
+}
 
 export function mergeInputs(inputs: InputData[]): CoberturaJson {
   const totalBranchesCovered = sumCoverageProperty(inputs, 'branches-covered');
@@ -27,15 +39,19 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
         timestamp: Date.now().toString(),
         sources: [
           {
-            source: flatten(
-              inputs.map(input => (input.data.coverage[0].sources ? input.data.coverage[0].sources![0].source : []))
-            )
+            source: [
+              {
+                $t: process.cwd()
+              }
+            ]
           }
         ],
         packages: [
           {
             package: flatten(
               inputs.map(input => {
+                const originalBaseDir = input.data.coverage[0].sources![0].source[0].$t;
+
                 return flatten(
                   input.data.coverage[0].packages.map(packages => {
                     if ((packages as Package).package) {
@@ -44,7 +60,7 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                         'line-rate': jsonPackage['line-rate'],
                         'branch-rate': jsonPackage['branch-rate'],
                         complexity: jsonPackage.complexity,
-                        classes: jsonPackage.classes
+                        classes: rewriteBasedir(originalBaseDir, jsonPackage.classes)
                       }));
                     } else {
                       return [
@@ -53,11 +69,14 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                           'line-rate': lineRate,
                           'branch-rate': branchRate,
                           complexity,
-                          classes: (packages as Class).class.map(
-                            jsonClass =>
-                              ({
-                                class: [jsonClass]
-                              } as Class)
+                          classes: rewriteBasedir(
+                            originalBaseDir,
+                            (packages as Class).class.map(
+                              jsonClass =>
+                                ({
+                                  class: [jsonClass]
+                                } as Class)
+                            )
                           )
                         }
                       ];

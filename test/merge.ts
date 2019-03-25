@@ -24,9 +24,7 @@ describe('mergeInputs', () => {
     expect(output.coverage[0].sources).to.be.array();
     expect(output.coverage[0].sources!.length).to.equal(1);
     expect(output.coverage[0].sources![0].source.length).to.equal(1);
-    expect(output.coverage[0].sources![0].source[0].$t).to.equal(
-      EMPTY_INPUT_FILE.data.coverage[0].sources![0].source[0].$t
-    );
+    expect(output.coverage[0].sources![0].source[0].$t).to.equal(process.cwd());
     expect(output.coverage[0].packages).to.be.array();
     expect(output.coverage[0].packages.length).to.equal(1);
     expect((output.coverage[0].packages[0] as Package).package).to.be.array();
@@ -65,11 +63,8 @@ describe('mergeInputs', () => {
     expect(parseInt(output.coverage[0].timestamp, 10)).to.be.almost(Date.now(), 100);
     expect(output.coverage[0].sources).to.be.array();
     expect(output.coverage[0].sources!.length).to.equal(1);
-    expect(output.coverage[0].sources![0].source.length).to.equal(4);
-    expect(output.coverage[0].sources![0].source[0].$t).to.equal(INPUT_FILE1.data.coverage[0].sources![0].source[0].$t);
-    expect(output.coverage[0].sources![0].source[1].$t).to.equal(INPUT_FILE1.data.coverage[0].sources![0].source[1].$t);
-    expect(output.coverage[0].sources![0].source[2].$t).to.equal(INPUT_FILE2.data.coverage[0].sources![0].source[0].$t);
-    expect(output.coverage[0].sources![0].source[3].$t).to.equal(INPUT_FILE2.data.coverage[0].sources![0].source[1].$t);
+    expect(output.coverage[0].sources![0].source.length).to.equal(1);
+    expect(output.coverage[0].sources![0].source[0].$t).to.equal(process.cwd());
     expect(output.coverage[0].packages).to.be.array();
     expect(output.coverage[0].packages.length).to.equal(1);
     expect((output.coverage[0].packages[0] as Package).package).to.be.array();
@@ -141,12 +136,8 @@ describe('mergeInputs', () => {
     expect(output.coverage[0]['branches-valid']).to.equal(totalBranchesValid.toString());
     expect(output.coverage[0].complexity).to.equal(complexity);
     expect(parseInt(output.coverage[0].timestamp, 10)).to.be.almost(Date.now(), 100);
-    expect(output.coverage[0].sources![0].source.length).to.equal(3);
-    expect(output.coverage[0].sources![0].source[0].$t).to.equal(INPUT_FILE2.data.coverage[0].sources![0].source[0].$t);
-    expect(output.coverage[0].sources![0].source[1].$t).to.equal(INPUT_FILE2.data.coverage[0].sources![0].source[1].$t);
-    expect(output.coverage[0].sources![0].source[2].$t).to.equal(
-      INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t
-    );
+    expect(output.coverage[0].sources![0].source.length).to.equal(1);
+    expect(output.coverage[0].sources![0].source[0].$t).to.equal(process.cwd());
     expect(output.coverage[0].packages).to.be.array();
     expect(output.coverage[0].packages.length).to.equal(1);
     expect((output.coverage[0].packages[0] as Package).package).to.be.array();

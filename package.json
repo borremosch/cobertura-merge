@@ -1,6 +1,6 @@
 {
   "name": "cobertura-merge",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Merges cobertura XML files",
   "main": "build/src/index.js",
   "typings": "build/src",
@@ -11,17 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/borremosch/cobertura-merge.git"
+    "url": "git+https://github.com/cubonacci/cobertura-merge.git"
   },
   "author": "Cubonacci",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/borremosch/cobertura-merge/issues"
+    "url": "https://github.com/cubonacci/cobertura-merge/issues"
   },
   "bin": {
     "cobertura-merge": "./build/src/index.js"
   },
-  "homepage": "https://github.com/borremosch/cobertura-merge#readme",
+  "homepage": "https://github.com/cubonacci/cobertura-merge#readme",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/chai-almost": "^1.0.0",

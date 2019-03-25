@@ -7,7 +7,7 @@ import * as path from 'path';
 
 function printHelp() {
   console.log(
-    `Version ${JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json')).toString('utf-8')).version}`
+    `Version ${JSON.parse(fs.readFileSync(path.join(__dirname, '../../package.json')).toString('utf-8')).version}`
   );
   console.log('Syntax:    cobertura-merge [options]... [package=input...]');
   console.log('');
@@ -43,6 +43,7 @@ export function validateArgs(args: ParsedArgs) {
       return !matches || matches.length !== 1 || input.split('=').some(part => !part.trim());
     })
   ) {
+    console.log('def');
     // Input error
     printHelp();
   }
@@ -71,6 +72,10 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
       console.log(`Unable to read file ${fileName}`);
       process.exit(1);
     }
-    return { packageName, fileName, data: data as CoberturaJson };
+    return {
+      packageName,
+      fileName,
+      data: data as CoberturaJson
+    };
   });
 }
