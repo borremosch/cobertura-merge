@@ -11,7 +11,7 @@ function printHelp() {
   );
   console.log('Syntax:    cobertura-merge [options]... [package=input...]');
   console.log('');
-  console.log('Examples:  cobertura-merge -o ouptut.xml package1=output1.xml package2=output2.xml');
+  console.log('Examples:  cobertura-merge -o output.xml package1=output1.xml package2=output2.xml');
   console.log('           cobertura-merge -p package1=output1.xml package2=output2.xml');
   console.log('');
   console.log('Options');
