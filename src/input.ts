@@ -43,7 +43,6 @@ export function validateArgs(args: ParsedArgs) {
       return !matches || matches.length !== 1 || input.split('=').some(part => !part.trim());
     })
   ) {
-    console.log('def');
     // Input error
     printHelp();
   }
