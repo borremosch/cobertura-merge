@@ -19,6 +19,7 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "skipDefaultLibCheck": true,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "sourceMap": true
   }
 }

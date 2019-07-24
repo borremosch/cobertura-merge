@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import 'source-map-support/register';
 import parseArgs from 'minimist';
 import { validateArgs, getInputDataFromArgs } from './input';
 import { mergeInputs } from './merge';

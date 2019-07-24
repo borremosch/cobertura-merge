@@ -42,6 +42,7 @@
   "dependencies": {
     "minimist": "^1.2.0",
     "prettier": "^1.16.4",
+    "source-map-support": "^0.5.12",
     "xml2json": "^0.11.2"
   },
   "husky": {
