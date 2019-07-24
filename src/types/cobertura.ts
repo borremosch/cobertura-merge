@@ -13,7 +13,7 @@ export interface Coverage {
   version: string;
   timestamp: string;
   sources?: Source[];
-  packages: Array<Package | Class>;
+  packages: Array<Package | Class | Text>;
 }
 
 interface Source {
@@ -42,6 +42,10 @@ export interface Class {
     methods: Method[];
     lines: Line[];
   }>;
+}
+
+export interface Text {
+  $t: string;
 }
 
 interface Method {

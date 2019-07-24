@@ -1,5 +1,5 @@
 import { InputData } from './input';
-import { CoberturaJson, Package, Class } from './types/cobertura';
+import { CoberturaJson, Package, Class, Text } from './types/cobertura';
 import { flatten } from './util';
 import * as path from 'path';
 
@@ -62,7 +62,7 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                         complexity: jsonPackage.complexity,
                         classes: rewriteBasedir(originalBaseDir, jsonPackage.classes)
                       }));
-                    } else {
+                    } else if ((packages as Class).class) {
                       return [
                         {
                           name: input.packageName,
@@ -80,6 +80,11 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                           )
                         }
                       ];
+                    } else if ((packages as Text).$t !== undefined) {
+                      // No packages
+                      return [];
+                    } else {
+                      throw new Error('Unknown package format: ' + JSON.stringify(packages));
                     }
                   })
                 );
