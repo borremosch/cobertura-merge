@@ -6,7 +6,7 @@ It can be installed through `npm` and used locally:
 
 ```
 npm install cobertura-merge
-cobertura -merge -o output.xml package1=input1.xml package2=input2.xml
+cobertura-merge -o output.xml package1=input1.xml package2=input2.xml
 ```
 
 Or it can be used directly without installing through `npx`:
