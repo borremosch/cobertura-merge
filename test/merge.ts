@@ -84,7 +84,12 @@ describe('mergeInputs', () => {
       (INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].complexity
     );
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
-      (INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes
+      (INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes.map(inputClasses => ({
+        class: inputClasses.class.map(inputClass => ({
+          ...inputClass,
+          filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+        }))
+      }))
     );
 
     // Validate second output package
@@ -99,7 +104,12 @@ describe('mergeInputs', () => {
       (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].complexity
     );
     expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
-      (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes
+      (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes.map(inputClasses => ({
+        class: inputClasses.class.map(inputClass => ({
+          ...inputClass,
+          filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+        }))
+      }))
     );
   });
 
@@ -155,7 +165,12 @@ describe('mergeInputs', () => {
       (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].complexity
     );
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
-      (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes
+      (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes.map(inputClasses => ({
+        class: inputClasses.class.map(inputClass => ({
+          ...inputClass,
+          filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+        }))
+      }))
     );
 
     // Validate second package
@@ -167,7 +182,12 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[1].complexity).to.equal(complexity);
     expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
       (INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].packages[0] as Class).class.map(jsonClass => ({
-        class: [jsonClass]
+        class: [
+          {
+            ...jsonClass,
+            filename: INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t + '/' + jsonClass.filename
+          }
+        ]
       }))
     );
   });
