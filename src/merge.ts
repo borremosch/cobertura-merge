@@ -5,15 +5,19 @@ import * as path from 'path';
 
 const VERSION = '0.1';
 
-function rewriteBasedir(originalBaseDir: string, classes: Class[]) {
-  return classes.map(jsonClass => ({
-    class: jsonClass.class.map(jsonInnerClass => {
-      return {
-        ...jsonInnerClass,
-        filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename))
-      };
-    })
-  }));
+function rewriteBasedir(originalBaseDir: string, classes?: Class[]) {
+  if (classes) {
+    return classes.map(jsonClass => ({
+      class: jsonClass.class.map(jsonInnerClass => {
+        return {
+          ...jsonInnerClass,
+          filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename))
+        };
+      })
+    }));
+  } else {
+    return [];
+  }
 }
 
 export function mergeInputs(inputs: InputData[]): CoberturaJson {

@@ -28,7 +28,7 @@ export interface Package {
     'line-rate': string;
     'branch-rate': string;
     complexity?: string;
-    classes: Class[];
+    classes?: Class[];
   }>;
 }
 
