@@ -54,7 +54,7 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
           {
             package: flatten(
               inputs.map(input => {
-                const originalBaseDir = input.data.coverage[0].sources![0].source[0].$t;
+                const originalBaseDir = input.data.coverage[0].sources?.[0].source[0].$t ?? '';
 
                 return flatten(
                   input.data.coverage[0].packages.map(packages => {

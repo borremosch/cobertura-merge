@@ -3,7 +3,7 @@
  *
  * @param xml XML input
  */
-export function addSelfClosingTags(xml: string) {
+export function addSelfClosingTags(xml: string): string {
   return xml.replace(/(<([a-zA-Z0-9]+)(\s[^>]*)?)><\/\2>/g, '$1/>');
 }
 
@@ -12,6 +12,6 @@ export function addSelfClosingTags(xml: string) {
  *
  * @param arr the arrays to merge
  */
-export function flatten<T>(arr: T[][]) {
+export function flatten<T>(arr: T[][]): T[] {
   return ([] as T[]).concat(...arr);
 }

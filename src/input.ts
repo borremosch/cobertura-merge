@@ -5,10 +5,16 @@ import { CoberturaJson } from './types/cobertura';
 import * as fs from 'fs';
 import * as path from 'path';
 
+interface PackageJson {
+  version: string;
+}
+
 function printHelp() {
-  console.log(
-    `Version ${JSON.parse(fs.readFileSync(path.join(__dirname, '../../package.json')).toString('utf-8')).version}`
-  );
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.join(__dirname, '../../package.json')).toString('utf-8')
+  ) as PackageJson;
+
+  console.log(`Version ${packageJson.version}`);
   console.log('Syntax:    cobertura-merge [options]... [package=input...]');
   console.log('');
   console.log('Examples:  cobertura-merge -o output.xml package1=output1.xml package2=output2.xml');
@@ -22,7 +28,7 @@ function printHelp() {
 
 const KNOWN_ARGS = ['_', 'o', 'p', 'print'];
 
-export function validateArgs(args: ParsedArgs) {
+export function validateArgs(args: ParsedArgs): void {
   // Check for unknown arguments
   const unknownArg = Object.keys(args).find(arg => KNOWN_ARGS.indexOf(arg) === -1);
   if (unknownArg) {
@@ -59,14 +65,14 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     const parts = inputArg.split('=');
     const packageName = parts[0];
     const fileName = parts[1];
-    let data = {};
+    let data: CoberturaJson;
     try {
       data = JSON.parse(
         toJson(fs.readFileSync(fileName, 'utf-8'), {
           arrayNotation: true,
           reversible: true
         })
-      );
+      ) as CoberturaJson;
     } catch (e) {
       console.log(`Unable to read file ${fileName}`);
       process.exit(1);
@@ -74,7 +80,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     return {
       packageName,
       fileName,
-      data: data as CoberturaJson
+      data
     };
   });
 }
