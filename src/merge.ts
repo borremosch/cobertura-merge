@@ -7,13 +7,13 @@ const VERSION = '0.1';
 
 function rewriteBasedir(originalBaseDir: string, classes?: Class[]) {
   if (classes) {
-    return classes.map(jsonClass => ({
-      class: jsonClass.class.map(jsonInnerClass => {
+    return classes.map((jsonClass) => ({
+      class: jsonClass.class.map((jsonInnerClass) => {
         return {
           ...jsonInnerClass,
-          filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename))
+          filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename)),
         };
-      })
+      }),
     }));
   } else {
     return [];
@@ -27,7 +27,7 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
   const totalLinesValid = sumCoverageProperty(inputs, 'lines-valid');
   const branchRate = (totalBranchesCovered / totalBranchesValid || 0).toString();
   const lineRate = (totalLinesCovered / totalLinesValid || 0).toString();
-  const complexity = Math.max(...inputs.map(input => parseInt(input.data.coverage[0].complexity, 10))).toString();
+  const complexity = Math.max(...inputs.map((input) => parseInt(input.data.coverage[0].complexity, 10))).toString();
 
   return {
     coverage: [
@@ -45,26 +45,26 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
           {
             source: [
               {
-                $t: process.cwd()
-              }
-            ]
-          }
+                $t: process.cwd(),
+              },
+            ],
+          },
         ],
         packages: [
           {
             package: flatten(
-              inputs.map(input => {
+              inputs.map((input) => {
                 const originalBaseDir = input.data.coverage[0].sources?.[0].source[0].$t ?? '';
 
                 return flatten(
-                  input.data.coverage[0].packages.map(packages => {
+                  input.data.coverage[0].packages.map((packages) => {
                     if ((packages as Package).package) {
-                      return (packages as Package).package.map(jsonPackage => ({
+                      return (packages as Package).package.map((jsonPackage) => ({
                         name: jsonPackage.name === '.' ? input.packageName : `${input.packageName}.${jsonPackage.name}`,
                         'line-rate': jsonPackage['line-rate'],
                         'branch-rate': jsonPackage['branch-rate'],
                         complexity: jsonPackage.complexity,
-                        classes: rewriteBasedir(originalBaseDir, jsonPackage.classes)
+                        classes: rewriteBasedir(originalBaseDir, jsonPackage.classes),
                       }));
                     } else if ((packages as Class).class) {
                       return [
@@ -76,13 +76,13 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                           classes: rewriteBasedir(
                             originalBaseDir,
                             (packages as Class).class.map(
-                              jsonClass =>
+                              (jsonClass) =>
                                 ({
-                                  class: [jsonClass]
+                                  class: [jsonClass],
                                 } as Class)
                             )
-                          )
-                        }
+                          ),
+                        },
                       ];
                     } else if ((packages as Text).$t !== undefined) {
                       // No packages
@@ -93,11 +93,11 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                   })
                 );
               })
-            )
-          }
-        ]
-      }
-    ]
+            ),
+          },
+        ],
+      },
+    ],
   };
 }
 

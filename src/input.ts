@@ -30,7 +30,7 @@ const KNOWN_ARGS = ['_', 'o', 'p', 'print'];
 
 export function validateArgs(args: ParsedArgs): void {
   // Check for unknown arguments
-  const unknownArg = Object.keys(args).find(arg => KNOWN_ARGS.indexOf(arg) === -1);
+  const unknownArg = Object.keys(args).find((arg) => KNOWN_ARGS.indexOf(arg) === -1);
   if (unknownArg) {
     console.log(`Unknown argument ${unknownArg}\n`);
     printHelp();
@@ -43,10 +43,10 @@ export function validateArgs(args: ParsedArgs): void {
   }
   const inputArgs = args._.slice(2);
   if (
-    inputArgs.some(input => {
+    inputArgs.some((input) => {
       // Check to see if the input is in format package=input
       const matches = input.match(/=/g);
-      return !matches || matches.length !== 1 || input.split('=').some(part => !part.trim());
+      return !matches || matches.length !== 1 || input.split('=').some((part) => !part.trim());
     })
   ) {
     // Input error
@@ -61,7 +61,7 @@ export interface InputData {
 }
 
 export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
-  return args._.slice(2).map(inputArg => {
+  return args._.slice(2).map((inputArg) => {
     const parts = inputArg.split('=');
     const packageName = parts[0];
     const fileName = parts[1];
@@ -70,7 +70,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
       data = JSON.parse(
         toJson(fs.readFileSync(fileName, 'utf-8'), {
           arrayNotation: true,
-          reversible: true
+          reversible: true,
         })
       ) as CoberturaJson;
     } catch (e) {
@@ -80,7 +80,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     return {
       packageName,
       fileName,
-      data
+      data,
     };
   });
 }
