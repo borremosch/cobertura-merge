@@ -30,7 +30,7 @@ export const EMPTY_INPUT_FILE: InputData = {
   }
 };
 
-export const EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES: InputData = {
+export const EMPTY_INPUT_FILE_WITHOUT_CLASSES: InputData = {
   packageName: 'empty',
   fileName: 'emptyfile',
   data: {

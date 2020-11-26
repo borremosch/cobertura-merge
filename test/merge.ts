@@ -7,7 +7,7 @@ import {
   INPUT_FILE1,
   INPUT_FILE2,
   INPUT_FILE_WITH_ROOT_CLASSES,
-  EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES
+  EMPTY_INPUT_FILE_WITHOUT_CLASSES
 } from './data';
 import { Package, Class } from './types/cobertura';
 
@@ -90,7 +90,7 @@ describe('mergeInputs', () => {
       (INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].complexity
     );
 
-    expect((INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes).to.not.null;
+    expect((INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes).to.not.equal(null);
 
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
@@ -114,7 +114,7 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[1].complexity).to.equal(
       (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].complexity
     );
-    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.null;
+    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.equal(null);
     expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
@@ -178,7 +178,7 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[0].complexity).to.equal(
       (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].complexity
     );
-    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.null;
+    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.equal(null);
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
@@ -209,35 +209,33 @@ describe('mergeInputs', () => {
     );
   });
 
-  it('should merge two files, one of which has a packages but no classes, into a single file', () => {
-    debugger;
-
-    const output = mergeInputs([INPUT_FILE2, EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES]);
+  it('should merge two files, one of which has a package but no classes, into a single file', () => {
+    const output = mergeInputs([INPUT_FILE2, EMPTY_INPUT_FILE_WITHOUT_CLASSES]);
 
     const totalLinesCovered =
       parseInt(INPUT_FILE2.data.coverage[0]['lines-covered'], 10) +
-      parseInt(EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0]['lines-covered'], 10);
+      parseInt(EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0]['lines-covered'], 10);
     const totalLinesValid =
       parseInt(INPUT_FILE2.data.coverage[0]['lines-valid'], 10) +
-      parseInt(EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0]['lines-valid'], 10);
+      parseInt(EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0]['lines-valid'], 10);
     const totalBranchesCovered =
       parseInt(INPUT_FILE2.data.coverage[0]['branches-covered'], 10) +
-      parseInt(EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0]['branches-covered'], 10);
+      parseInt(EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0]['branches-covered'], 10);
     const totalBranchesValid =
       parseInt(INPUT_FILE2.data.coverage[0]['branches-valid'], 10) +
-      parseInt(EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0]['branches-valid'], 10);
+      parseInt(EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0]['branches-valid'], 10);
 
     const complexity = Math.max(
       parseInt(INPUT_FILE2.data.coverage[0].complexity, 10),
-      parseInt(EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0].complexity, 10)
+      parseInt(EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0].complexity, 10)
     ).toString();
 
     const lineRate = (totalLinesCovered / totalLinesValid).toString();
-    const brancheRate = (totalBranchesCovered / totalBranchesValid).toString();
+    const branchRate = (totalBranchesCovered / totalBranchesValid).toString();
 
     expect(output.coverage.length).to.equal(1);
     expect(output.coverage[0]['line-rate']).to.equal(lineRate);
-    expect(output.coverage[0]['branch-rate']).to.equal(brancheRate);
+    expect(output.coverage[0]['branch-rate']).to.equal(branchRate);
     expect(output.coverage[0]['lines-covered']).to.equal(totalLinesCovered.toString());
     expect(output.coverage[0]['lines-valid']).to.equal(totalLinesValid.toString());
     expect(output.coverage[0]['branches-covered']).to.equal(totalBranchesCovered.toString());
@@ -262,7 +260,7 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[0].complexity).to.equal(
       (INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].complexity
     );
-    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.null;
+    expect((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes).to.not.equal(null);
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
@@ -276,21 +274,18 @@ describe('mergeInputs', () => {
 
     // Validate second package
     expect((output.coverage[0].packages[0] as Package).package[1].name).to.equal(
-      EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.packageName
+      `${EMPTY_INPUT_FILE_WITHOUT_CLASSES.packageName}.${
+        (EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0].packages[0] as Package).package[0].name
+      }`
     );
-    expect((output.coverage[0].packages[0] as Package).package[1]['line-rate']).to.equal(lineRate);
-    expect((output.coverage[0].packages[0] as Package).package[1]['branch-rate']).to.equal(brancheRate);
-    expect((output.coverage[0].packages[0] as Package).package[1].complexity).to.equal(complexity);
-    expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
-      (EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0].packages[0] as Class).class.map(jsonClass => ({
-        class: [
-          {
-            ...jsonClass,
-            filename:
-              EMPTY_INPUT_FILE_WITH_EMPTY_CLASSES.data.coverage[0].sources![0].source[0].$t + '/' + jsonClass.filename
-          }
-        ]
-      }))
+    expect((output.coverage[0].packages[0] as Package).package[1]['line-rate']).to.equal(
+      (EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0].packages[0] as Package).package[0]['line-rate']
+    );
+    expect((output.coverage[0].packages[0] as Package).package[1]['branch-rate']).to.equal(
+      (EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0].packages[0] as Package).package[0]['branch-rate']
+    );
+    expect((output.coverage[0].packages[0] as Package).package[1].complexity).to.equal(
+      (EMPTY_INPUT_FILE_WITHOUT_CLASSES.data.coverage[0].packages[0] as Package).package[0].complexity
     );
   });
 });
