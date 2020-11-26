@@ -1,3 +1,8 @@
+[![npm version](https://badge.fury.io/js/cobertura-merge.svg)](https://badge.fury.io/js/cobertura-merge)
+![build](https://github.com/borremosch/cobertura-merge/workflows/Node.js%20CI/badge.svg)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+![lanauge](https://img.shields.io/github/languages/top/borremosch/cobertura-merge)
+
 Utility to merge multiple cobertura xml files into one.
 
 ## Usage
