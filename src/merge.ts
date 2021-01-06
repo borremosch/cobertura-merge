@@ -6,18 +6,17 @@ import * as path from 'path';
 const VERSION = '0.1';
 
 function rewriteBasedir(originalBaseDir: string, classes?: Class[]) {
-  if (classes) {
-    return classes.map((jsonClass) => ({
-      class: jsonClass.class.map((jsonInnerClass) => {
-        return {
-          ...jsonInnerClass,
-          filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename)),
-        };
-      }),
-    }));
-  } else {
-    return [];
-  }
+  return (
+    classes?.map((jsonClass) => ({
+      class:
+        jsonClass.class?.map((jsonInnerClass) => {
+          return {
+            ...jsonInnerClass,
+            filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename)),
+          };
+        }) ?? [],
+    })) ?? []
+  );
 }
 
 export function mergeInputs(inputs: InputData[]): CoberturaJson {
