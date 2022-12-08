@@ -11,6 +11,9 @@ import {
 } from './data';
 import { Class, Package } from './types/cobertura';
 
+const isWin = process.platform === 'win32';
+const pathSeparator = isWin ? '\\' : '/';
+
 chai.use(chaiAlmost(100));
 chai.use(chaiArrays);
 
@@ -97,7 +100,7 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -120,7 +123,7 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -184,7 +187,7 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -202,7 +205,10 @@ describe('mergeInputs', () => {
         class: [
           {
             ...jsonClass,
-            filename: INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t + '\\' + jsonClass.filename
+            filename:
+              INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t +
+              pathSeparator +
+              jsonClass.filename
           }
         ]
       }))
@@ -266,7 +272,7 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
