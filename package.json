@@ -6,7 +6,7 @@
   "typings": "build/src",
   "scripts": {
     "build": "tsc",
-    "prepare": "tsc",
+    "prepare": "tsc && husky install",
     "test": "mocha --colors --require ts-node/register \"test/**/*.ts\"",
     "lint": "eslint src --cache --ext .ts"
   },
