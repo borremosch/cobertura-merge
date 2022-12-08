@@ -19,15 +19,15 @@ export const EMPTY_INPUT_FILE: InputData = {
           {
             source: [
               {
-                $t: 'source',
-              },
-            ],
-          },
+                $t: 'source'
+              }
+            ]
+          }
         ],
-        packages: [{ package: [] }],
-      },
-    ],
-  },
+        packages: [{ package: [] }]
+      }
+    ]
+  }
 };
 
 export const EMPTY_INPUT_FILE_WITHOUT_CLASSES: InputData = {
@@ -49,10 +49,10 @@ export const EMPTY_INPUT_FILE_WITHOUT_CLASSES: InputData = {
           {
             source: [
               {
-                $t: 'source',
-              },
-            ],
-          },
+                $t: 'source'
+              }
+            ]
+          }
         ],
         packages: [
           {
@@ -60,14 +60,14 @@ export const EMPTY_INPUT_FILE_WITHOUT_CLASSES: InputData = {
               {
                 'branch-rate': '1',
                 'line-rate': '1',
-                name: 'package1',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                name: 'package1'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export const INPUT_FILE1: InputData = {
@@ -89,13 +89,13 @@ export const INPUT_FILE1: InputData = {
           {
             source: [
               {
-                $t: 'source1.1',
+                $t: 'source1.1'
               },
               {
-                $t: 'source1.2',
-              },
-            ],
-          },
+                $t: 'source1.2'
+              }
+            ]
+          }
         ],
         packages: [
           {
@@ -113,18 +113,18 @@ export const INPUT_FILE1: InputData = {
                         'line-rate': '0,5',
                         'branch-rate': '0.5',
                         methods: [],
-                        lines: [],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                        lines: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export const INPUT_FILE2: InputData = {
@@ -146,13 +146,13 @@ export const INPUT_FILE2: InputData = {
           {
             source: [
               {
-                $t: 'source2.1',
+                $t: 'source2.1'
               },
               {
-                $t: 'source2.2',
-              },
-            ],
-          },
+                $t: 'source2.2'
+              }
+            ]
+          }
         ],
         packages: [
           {
@@ -170,18 +170,18 @@ export const INPUT_FILE2: InputData = {
                         'line-rate': '1',
                         'branch-rate': '1',
                         methods: [],
-                        lines: [],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                        lines: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export const INPUT_FILE_WITH_ROOT_CLASSES: InputData = {
@@ -203,10 +203,10 @@ export const INPUT_FILE_WITH_ROOT_CLASSES: InputData = {
           {
             source: [
               {
-                $t: 'source_with_root_classes',
-              },
-            ],
-          },
+                $t: 'source_with_root_classes'
+              }
+            ]
+          }
         ],
         packages: [
           {
@@ -217,12 +217,12 @@ export const INPUT_FILE_WITH_ROOT_CLASSES: InputData = {
                 'line-rate': '0.8',
                 'branch-rate': '0.8',
                 methods: [],
-                lines: [],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                lines: []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 };

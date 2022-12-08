@@ -7,7 +7,7 @@ import {
   EMPTY_INPUT_FILE_WITHOUT_CLASSES,
   INPUT_FILE1,
   INPUT_FILE2,
-  INPUT_FILE_WITH_ROOT_CLASSES,
+  INPUT_FILE_WITH_ROOT_CLASSES
 } from './data';
 import { Class, Package } from './types/cobertura';
 
@@ -97,8 +97,8 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename,
-          })),
+            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+          }))
         })
       )
     );
@@ -120,8 +120,8 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename,
-          })),
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+          }))
         })
       )
     );
@@ -184,8 +184,8 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename,
-          })),
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+          }))
         })
       )
     );
@@ -202,10 +202,9 @@ describe('mergeInputs', () => {
         class: [
           {
             ...jsonClass,
-            filename:
-              INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t + '\\' + jsonClass.filename,
-          },
-        ],
+            filename: INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t + '\\' + jsonClass.filename
+          }
+        ]
       }))
     );
   });
@@ -267,8 +266,8 @@ describe('mergeInputs', () => {
         (inputClasses: Class) => ({
           class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename,
-          })),
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '\\' + inputClass.filename
+          }))
         })
       )
     );

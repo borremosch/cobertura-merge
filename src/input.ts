@@ -75,7 +75,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
       data = JSON.parse(
         toJson(fs.readFileSync(fileName, 'utf-8'), {
           arrayNotation: true,
-          reversible: true,
+          reversible: true
         })
       ) as CoberturaJson;
     } catch (e) {
@@ -85,7 +85,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     return {
       packageName,
       fileName,
-      data,
+      data
     };
   });
 }
