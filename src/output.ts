@@ -1,7 +1,7 @@
-import { CoberturaJson } from './types/cobertura';
 import * as fs from 'fs';
-import { addSelfClosingTags } from './util';
 import { toXml } from 'xml2json';
+import { CoberturaJson } from './types/cobertura';
+import { addSelfClosingTags } from './util';
 
 const XML_HEADER = '<?xml version="1.0" ?>\n';
 
