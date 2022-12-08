@@ -1,0 +1,15 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx", ".html"],
+    "fix": true,
+    "cache": true
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "json"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.eol": "\n"
+}

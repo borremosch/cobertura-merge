@@ -1,7 +1,7 @@
-import { InputData } from './input';
-import { CoberturaJson, Package, Class, Text } from './types/cobertura';
-import { flatten } from './util';
 import * as path from 'path';
+import { InputData } from './input';
+import { Class, CoberturaJson, Package, Text } from './types/cobertura';
+import { flatten } from './util';
 
 const VERSION = '0.1';
 
@@ -12,9 +12,9 @@ function rewriteBasedir(originalBaseDir: string, classes?: Class[]) {
         jsonClass.class?.map((jsonInnerClass) => {
           return {
             ...jsonInnerClass,
-            filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename)),
+            filename: path.relative(process.cwd(), path.join(originalBaseDir, jsonInnerClass.filename))
           };
-        }) ?? [],
+        }) ?? []
     })) ?? []
   );
 }
@@ -44,10 +44,10 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
           {
             source: [
               {
-                $t: process.cwd(),
-              },
-            ],
-          },
+                $t: process.cwd()
+              }
+            ]
+          }
         ],
         packages: [
           {
@@ -63,7 +63,7 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                         'line-rate': jsonPackage['line-rate'],
                         'branch-rate': jsonPackage['branch-rate'],
                         complexity: jsonPackage.complexity,
-                        classes: rewriteBasedir(originalBaseDir, jsonPackage.classes),
+                        classes: rewriteBasedir(originalBaseDir, jsonPackage.classes)
                       }));
                     } else if ((packages as Class).class) {
                       return [
@@ -77,11 +77,11 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                             (packages as Class).class.map(
                               (jsonClass) =>
                                 ({
-                                  class: [jsonClass],
+                                  class: [jsonClass]
                                 } as Class)
                             )
-                          ),
-                        },
+                          )
+                        }
                       ];
                     } else if ((packages as Text).$t !== undefined) {
                       // No packages
@@ -92,11 +92,11 @@ export function mergeInputs(inputs: InputData[]): CoberturaJson {
                   })
                 );
               })
-            ),
-          },
-        ],
-      },
-    ],
+            )
+          }
+        ]
+      }
+    ]
   };
 }
 

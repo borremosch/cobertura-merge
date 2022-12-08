@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
 import parseArgs from 'minimist';
-import { validateArgs, getInputDataFromArgs } from './input';
+import 'source-map-support/register';
+import { getInputDataFromArgs, validateArgs } from './input';
 import { mergeInputs } from './merge';
 import { writeOutput } from './output';
 
@@ -25,5 +25,6 @@ if (args.p || args.print) {
 
 if (args.o) {
   // Write resulting xml to file
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   writeOutput(args.o, output);
 }

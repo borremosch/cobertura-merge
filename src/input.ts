@@ -1,9 +1,8 @@
+import * as fs from 'fs';
 import { ParsedArgs } from 'minimist';
-import { isArray, isString } from 'util';
+import * as path from 'path';
 import { toJson } from 'xml2json';
 import { CoberturaJson } from './types/cobertura';
-import * as fs from 'fs';
-import * as path from 'path';
 
 interface PackageJson {
   version: string;
@@ -37,7 +36,13 @@ export function validateArgs(args: ParsedArgs): void {
     process.exit(1);
   }
 
-  if (args._.length < 3 || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
+  if (
+    args._.length < 3 ||
+    args.o === true ||
+    Array.isArray(args.o) ||
+    typeof args.p === 'string' ||
+    Array.isArray(args.p)
+  ) {
     // Input error
     printHelp();
   }
@@ -70,7 +75,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
       data = JSON.parse(
         toJson(fs.readFileSync(fileName, 'utf-8'), {
           arrayNotation: true,
-          reversible: true,
+          reversible: true
         })
       ) as CoberturaJson;
     } catch (e) {
@@ -80,7 +85,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     return {
       packageName,
       fileName,
-      data,
+      data
     };
   });
 }

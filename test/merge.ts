@@ -4,12 +4,15 @@ import chaiArrays from 'chai-arrays';
 import { mergeInputs } from '../src/merge';
 import {
   EMPTY_INPUT_FILE,
+  EMPTY_INPUT_FILE_WITHOUT_CLASSES,
   INPUT_FILE1,
   INPUT_FILE2,
-  INPUT_FILE_WITH_ROOT_CLASSES,
-  EMPTY_INPUT_FILE_WITHOUT_CLASSES
+  INPUT_FILE_WITH_ROOT_CLASSES
 } from './data';
-import { Package, Class } from './types/cobertura';
+import { Class, Package } from './types/cobertura';
+
+const isWin = process.platform === 'win32';
+const pathSeparator = isWin ? '\\' : '/';
 
 chai.use(chaiAlmost(100));
 chai.use(chaiArrays);
@@ -95,9 +98,9 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE1.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
-          class: inputClasses.class.map(inputClass => ({
+          class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+            filename: INPUT_FILE1.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -118,9 +121,9 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
-          class: inputClasses.class.map(inputClass => ({
+          class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -182,9 +185,9 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
-          class: inputClasses.class.map(inputClass => ({
+          class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
@@ -198,11 +201,14 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[1]['branch-rate']).to.equal(brancheRate);
     expect((output.coverage[0].packages[0] as Package).package[1].complexity).to.equal(complexity);
     expect((output.coverage[0].packages[0] as Package).package[1].classes).to.deep.equal(
-      (INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].packages[0] as Class).class.map(jsonClass => ({
+      (INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].packages[0] as Class).class.map((jsonClass) => ({
         class: [
           {
             ...jsonClass,
-            filename: INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t + '/' + jsonClass.filename
+            filename:
+              INPUT_FILE_WITH_ROOT_CLASSES.data.coverage[0].sources![0].source[0].$t +
+              pathSeparator +
+              jsonClass.filename
           }
         ]
       }))
@@ -264,9 +270,9 @@ describe('mergeInputs', () => {
     expect((output.coverage[0].packages[0] as Package).package[0].classes).to.deep.equal(
       ((INPUT_FILE2.data.coverage[0].packages[0] as Package).package[0].classes as Class[]).map(
         (inputClasses: Class) => ({
-          class: inputClasses.class.map(inputClass => ({
+          class: inputClasses.class.map((inputClass) => ({
             ...inputClass,
-            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + '/' + inputClass.filename
+            filename: INPUT_FILE2.data.coverage[0].sources![0].source[0].$t + pathSeparator + inputClass.filename
           }))
         })
       )
