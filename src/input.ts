@@ -39,7 +39,13 @@ export function validateArgs(args: ParsedArgs): void {
     process.exit(1);
   }
 
-  if (args._.length < 3 && args.files == undefined || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
+  if (
+    (args._.length < 3 && args.files == undefined) ||
+    args.o === true ||
+    isArray(args.o) ||
+    isString(args.p) ||
+    isArray(args.p)
+  ) {
     // Input error
     printHelp();
   }
@@ -64,12 +70,12 @@ export interface InputData {
 }
 
 export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
-  let packages :string[] = args._.slice(2)
+  let packages = args._.slice(2);
 
   // Check if the user wanted to submit files by a glob pattern
-  if (args.files != "") {
+  if (args.files != '') {
     // Create an array by appending "package=" before each file found by the glob
-    packages = glob.sync(args.files).map((file, i) => `package${i+1}=${file}`)
+    packages = glob.sync(args.files).map((file, i) => `package${i + 1}=${file}`);
   }
 
   return packages.map((inputArg, index) => {
