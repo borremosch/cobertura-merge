@@ -39,7 +39,7 @@ export function validateArgs(args: ParsedArgs): void {
     process.exit(1);
   }
 
-  if (args._.length < 3  && args.files == undefined || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
+  if (args._.length < 3 && args.files == undefined || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
     // Input error
     printHelp();
   }
