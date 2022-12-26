@@ -69,12 +69,12 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
   // Check if the user wanted to submit files by a glob pattern
   if (args.files != "") {
     // Create an array by appending "package=" before each file found by the glob
-    packages = glob.sync(args.files).map((file, i) => `package${i}=${file}`)
+    packages = glob.sync(args.files).map((file, i) => `package${i+1}=${file}`)
   }
 
   return packages.map((inputArg, index) => {
     const parts = inputArg.split('=');
-    const packageName = parts[0] + index;
+    const packageName = parts[0];
     const fileName = parts[1];
     let data: CoberturaJson;
     try {
