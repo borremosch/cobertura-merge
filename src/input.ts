@@ -2,6 +2,7 @@ import { ParsedArgs } from 'minimist';
 import { isArray, isString } from 'util';
 import { toJson } from 'xml2json';
 import { CoberturaJson } from './types/cobertura';
+import glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -15,9 +16,10 @@ function printHelp() {
   ) as PackageJson;
 
   console.log(`Version ${packageJson.version}`);
-  console.log('Syntax:    cobertura-merge [options]... [package=input...]');
+  console.log('Syntax:    cobertura-merge [options]... [--files=pattern] [package=input...]');
   console.log('');
   console.log('Examples:  cobertura-merge -o output.xml package1=output1.xml package2=output2.xml');
+  console.log('           cobertura-merge -o output.xml --files=**/*_coverage.xml');
   console.log('           cobertura-merge -p package1=output1.xml package2=output2.xml');
   console.log('');
   console.log('Options');
@@ -26,7 +28,7 @@ function printHelp() {
   process.exit();
 }
 
-const KNOWN_ARGS = ['_', 'o', 'p', 'print'];
+const KNOWN_ARGS = ['_', 'o', 'p', 'print', 'files'];
 
 export function validateArgs(args: ParsedArgs): void {
   // Check for unknown arguments
@@ -37,12 +39,19 @@ export function validateArgs(args: ParsedArgs): void {
     process.exit(1);
   }
 
-  if (args._.length < 3 || args.o === true || isArray(args.o) || isString(args.p) || isArray(args.p)) {
+  if (
+    (args._.length < 3 && args.files == undefined) ||
+    args.o === true ||
+    isArray(args.o) ||
+    isString(args.p) ||
+    isArray(args.p)
+  ) {
     // Input error
     printHelp();
   }
   const inputArgs = args._.slice(2);
   if (
+    args.files == undefined &&
     inputArgs.some((input) => {
       // Check to see if the input is in format package=input
       const matches = input.match(/=/g);
@@ -61,7 +70,15 @@ export interface InputData {
 }
 
 export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
-  return args._.slice(2).map((inputArg) => {
+  let packages = args._.slice(2);
+
+  // Check if the user wanted to submit files by a glob pattern
+  if (args.files != '') {
+    // Create an array by appending "package=" before each file found by the glob
+    packages = glob.sync(args.files).map((file, i) => `package${i + 1}=${file}`);
+  }
+
+  return packages.map((inputArg) => {
     const parts = inputArg.split('=');
     const packageName = parts[0];
     const fileName = parts[1];
