@@ -78,7 +78,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     packages = glob.sync(args.files).map((file, i) => `package${i + 1}=${file}`);
   }
 
-  return packages.map((inputArg, index) => {
+  return packages.map((inputArg) => {
     const parts = inputArg.split('=');
     const packageName = parts[0];
     const fileName = parts[1];
