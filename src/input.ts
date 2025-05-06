@@ -1,6 +1,6 @@
 import { ParsedArgs } from 'minimist';
 import { isArray, isString } from 'util';
-import { toJson } from 'xml2json';
+import { XMLParser } from 'fast-xml-parser';
 import { CoberturaJson } from './types/cobertura';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -67,12 +67,7 @@ export function getInputDataFromArgs(args: ParsedArgs): InputData[] {
     const fileName = parts[1];
     let data: CoberturaJson;
     try {
-      data = JSON.parse(
-        toJson(fs.readFileSync(fileName, 'utf-8'), {
-          arrayNotation: true,
-          reversible: true,
-        })
-      ) as CoberturaJson;
+      data = JSON.parse(new XMLParser().parse(fs.readFileSync(fileName, 'utf-8'))) as CoberturaJson;
     } catch (e) {
       console.log(`Unable to read file ${fileName}`);
       process.exit(1);
