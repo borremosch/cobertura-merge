@@ -1,6 +1,9 @@
 import { ParsedArgs } from 'minimist';
-import { isArray, isString } from 'util';
-import { toJson } from 'xml2json';
+import { toJson } from './xml';
+
+// util.isArray / util.isString were removed in Node.js 23
+const isArray = Array.isArray;
+const isString = (value: unknown): value is string => typeof value === 'string';
 import { CoberturaJson } from './types/cobertura';
 import * as fs from 'fs';
 import * as path from 'path';
